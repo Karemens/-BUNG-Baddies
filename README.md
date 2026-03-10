@@ -1,4 +1,4 @@
-Gruppe 1 Lädt Frames hoch
-Gruppe 2 setzt in die Frames Bilder/ Memes ein 
-Gruppe 3 Setzt einen Text unter die Bilder ein
+Gruppe 1 Design
+Gruppe 2 Text
+Gruppe 3 Bilder
 Gruppe 4 HEADER
