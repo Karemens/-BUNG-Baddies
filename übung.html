@@ -3,210 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formen verschieben</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      padding: 20px;
-      text-align: center;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-
-    p {
-      margin: 0;
-      color: #4b5563;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      align-items: center;
-      padding: 14px;
-      background: #eef2ff;
-      border-bottom: 1px solid #dbeafe;
-      flex-wrap: wrap;
-    }
-
-    button {
-      border: none;
-      background: #2563eb;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    #playground {
-      position: relative;
-      width: min(1100px, calc(100% - 24px));
-      height: 70vh;
-      margin: 18px auto 24px;
-      background: white;
-      border: 2px dashed #cbd5e1;
-      border-radius: 18px;
-      overflow: hidden;
-      touch-action: none;
-    }
-
-    .shape {
-      position: absolute;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-    }
-
-    .shape.dragging {
-      cursor: grabbing;
-      transform: scale(1.04);
-      z-index: 999;
-    }
-
-    .circle {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #ef4444;
-      left: 60px;
-      top: 60px;
-    }
-
-    .square {
-      width: 100px;
-      height: 100px;
-      background: #10b981;
-      left: 220px;
-      top: 140px;
-      border-radius: 14px;
-    }
-
-    .triangle {
-      width: 0;
-      height: 0;
-      border-left: 55px solid transparent;
-      border-right: 55px solid transparent;
-      border-bottom: 100px solid #f59e0b;
-      left: 420px;
-      top: 90px;
-      box-shadow: none;
-    }
-
-    .triangle.dragging {
-      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.12));
-    }
-
-    .info {
-      text-align: center;
-      padding: 0 16px 24px;
-      color: #6b7280;
-    }
-  </style>
+  <title>GitHub Gruppenübung</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Formen verschieben</h1>
-    <p>Klicke oder tippe auf eine Form und ziehe sie über die Fläche.</p>
+  <!-- GRUPPE 1: HEADER -->
+  <header class="header">
+    <h1>Willkommen zu unserer Projektseite</h1>
+    <p>Diese Webseite wird von 4 Gruppen gemeinsam bearbeitet.</p>
   </header>
 
-  <div class="toolbar">
-    <button id="resetBtn">Positionen zurücksetzen</button>
-  </div>
+  <!-- GRUPPE 2: ÜBER UNS -->
+  <section class="about">
+    <h2>Aufgabe</h2>
+    <p>
+      Erstellt eine "Wiki" über EINE Art von Dinosaurier. Es soll Bilder und Text beinhalten und zueinander passen.
+    </p>
+  </section>
 
-  <main id="playground">
-    <div class="shape circle" data-start-left="60" data-start-top="60"></div>
-    <div class="shape square" data-start-left="220" data-start-top="140"></div>
-    <div class="shape triangle" data-start-left="420" data-start-top="90"></div>
-  </main>
+  <!-- GRUPPE 3: KARTEN / INHALT -->
+  <section class="cards">
+    <h2>Unsere Bereiche</h2>
 
-  <div class="info">
-    Tipp: Die Datei einfach als <strong>drag-shapes.html</strong> speichern und im Browser öffnen.
-  </div>
+    <div class="card-container">
+      <div class="card">
+        <h3>Design</h3>
+        <p>Farben, Layout und Aussehen der Webseite.</p>
+      </div>
 
-  <script>
-    const playground = document.getElementById('playground');
-    const shapes = document.querySelectorAll('.shape');
-    const resetBtn = document.getElementById('resetBtn');
+      <div class="card">
+        <h3>Inhalte</h3>
+        <p>Texte, Überschriften und Beschreibungen.</p>
+      </div>
 
-    let activeShape = null;
-    let offsetX = 0;
-    let offsetY = 0;
+      <div class="card">
+        <h3>Bilder</h3>
+        <p>Bilder passend einfügen und formatieren</p>
+      </div>
+    </div>
+  </section>
 
-    shapes.forEach((shape) => {
-      shape.addEventListener('pointerdown', (event) => {
-        activeShape = shape;
-        const shapeRect = shape.getBoundingClientRect();
-
-        offsetX = event.clientX - shapeRect.left;
-        offsetY = event.clientY - shapeRect.top;
-
-        shape.classList.add('dragging');
-        shape.setPointerCapture(event.pointerId);
-      });
-
-      shape.addEventListener('pointerup', (event) => {
-        shape.classList.remove('dragging');
-        activeShape = null;
-        shape.releasePointerCapture(event.pointerId);
-      });
-    });
-
-    playground.addEventListener('pointermove', (event) => {
-      if (!activeShape) return;
-
-      const areaRect = playground.getBoundingClientRect();
-      const shapeRect = activeShape.getBoundingClientRect();
-
-      let newLeft = event.clientX - areaRect.left - offsetX;
-      let newTop = event.clientY - areaRect.top - offsetY;
-
-      const shapeWidth = shapeRect.width;
-      const shapeHeight = shapeRect.height;
-
-      newLeft = Math.max(0, Math.min(newLeft, areaRect.width - shapeWidth));
-      newTop = Math.max(0, Math.min(newTop, areaRect.height - shapeHeight));
-
-      activeShape.style.left = `${newLeft}px`;
-      activeShape.style.top = `${newTop}px`;
-    });
-
-    playground.addEventListener('pointerup', () => {
-      if (activeShape) {
-        activeShape.classList.remove('dragging');
-        activeShape = null;
-      }
-    });
-
-    resetBtn.addEventListener('click', () => {
-      shapes.forEach((shape) => {
-        shape.style.left = `${shape.dataset.startLeft}px`;
-        shape.style.top = `${shape.dataset.startTop}px`;
-      });
-    });
-  </script>
+  <!-- GRUPPE 4: FOOTER -->
+  <footer class="footer">
+    <p>Der Dino steht zur Wahl</p>
+  </footer>
 </body>
 </html>
